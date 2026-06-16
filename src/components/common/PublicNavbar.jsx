@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { useWebsiteStore } from '../../store/useWebsiteStore';
 
-const navItems = [
+const defaultNavItems = [
     { label: 'Home', href: '/' },
     {
         label: 'Programs',
@@ -11,24 +12,23 @@ const navItems = [
             { label: 'Programmes', href: '/programmes' },
             { label: 'Centre of Excellence', href: '/centre-of-excellence' },
             { label: 'Lakshya 2047 (Future Skills)', href: '/lakshya-2047' },
-            { label: 'Internship & Projects', href: '/internship-and-projects' },
-            { label: 'Placements', href: '/placements' },
         ],
     },
     {
-        label: 'Partners',
+        label: 'Placements',
         dropdown: [
+            { label: 'Placements Page', href: '/placements' },
+            { label: 'Internship & Projects', href: '/internship-and-projects' },
             { label: 'Educational Partners', href: '/about#educational-partners' },
-            { label: 'Technology & Corporate Partners', href: '/about#corporate-partners' },
-            { label: 'Recruitment Partners', href: '/placements#recruitment-partners' },
+            { label: 'Hiring Partners', href: '/about#corporate-partners' },
         ],
     },
+    { label: 'Careers', href: '/careers' },
     {
         label: 'Company',
         dropdown: [
             { label: 'About Us', href: '/about' },
             { label: 'Gallery', href: '/gallery' },
-            { label: 'Careers', href: '/careers' },
         ],
     },
     { label: 'Contact', href: '/contact' },
@@ -59,6 +59,9 @@ const PublicNavbar = ({ isDarkTheme = false }) => {
     const [openDropdown, setOpenDropdown] = useState(null);
     const [mobileExpanded, setMobileExpanded] = useState(null);
     const closeTimer = useRef(null);
+
+    const navbarItems = useWebsiteStore((state) => state.navbarItems);
+    const displayNavItems = navbarItems && navbarItems.length > 0 ? navbarItems : defaultNavItems;
 
     useEffect(() => {
         const handleScroll = () => setNavScrolled(window.scrollY > 30);
@@ -110,7 +113,7 @@ const PublicNavbar = ({ isDarkTheme = false }) => {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-1">
-                    {navItems.map((item) =>
+                    {displayNavItems.map((item) =>
                         item.dropdown ? (
                             <div key={item.label} className="relative"
                                 onMouseEnter={() => handleEnter(item.label)}
@@ -176,7 +179,7 @@ const PublicNavbar = ({ isDarkTheme = false }) => {
                         exit={{ opacity: 0, height: 0 }}
                         className="md:hidden bg-white border-t border-slate-100 overflow-hidden shadow-2xl">
                         <div className="px-6 py-4 space-y-1">
-                            {navItems.map((item) =>
+                            {displayNavItems.map((item) =>
                                 item.dropdown ? (
                                     <div key={item.label}>
                                         <button

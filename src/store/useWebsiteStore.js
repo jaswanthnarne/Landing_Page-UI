@@ -18,6 +18,7 @@ export const useWebsiteStore = create((set, get) => ({
     pageImages: {},
     lakshyaConfig: null,
     galleryCategories: [],
+    navbarItems: [],
     isStoreInitialized: false,
 
     // Initialize Store
@@ -32,7 +33,8 @@ export const useWebsiteStore = create((set, get) => ({
                 careersRes,
                 imagesRes,
                 lakshyaRes,
-                galleryRes
+                galleryRes,
+                navbarRes
             ] = await Promise.all([
                 axios.get('/api/hero'),
                 axios.get('/api/courses'),
@@ -42,7 +44,8 @@ export const useWebsiteStore = create((set, get) => ({
                 axios.get('/api/careers'),
                 axios.get('/api/images'),
                 axios.get('/api/lakshya').catch(() => ({ data: null })),
-                axios.get('/api/gallery').catch(() => ({ data: null }))
+                axios.get('/api/gallery').catch(() => ({ data: null })),
+                axios.get('/api/navbar').catch(() => ({ data: null }))
             ]);
 
             set({
@@ -55,6 +58,7 @@ export const useWebsiteStore = create((set, get) => ({
                 pageImages: imagesRes.data || {},
                 lakshyaConfig: lakshyaRes.data,
                 galleryCategories: galleryRes?.data?.categories || [],
+                navbarItems: navbarRes?.data?.items || [],
                 isStoreInitialized: true
             });
 
@@ -140,6 +144,17 @@ export const useWebsiteStore = create((set, get) => ({
             set({ galleryCategories: categories });
         } catch (error) {
             console.error('Failed to update gallery categories:', error);
+            throw error;
+        }
+    },
+
+    // Navbar Action
+    updateNavbarItems: async (items) => {
+        try {
+            await axios.put('/api/navbar', { items });
+            set({ navbarItems: items });
+        } catch (error) {
+            console.error('Failed to update navbar items:', error);
             throw error;
         }
     },

@@ -52,6 +52,10 @@ export default function GalleryManager() {
     const [itemSrc, setItemSrc] = useState('');
     const [isUploading, setIsUploading] = useState(false);
 
+    // Modal state for adding category
+    const [isCatModalOpen, setIsCatModalOpen] = useState(false);
+    const [newCatLabel, setNewCatLabel] = useState('');
+
     // Sync state when store config changes
     useEffect(() => {
         const loaded = galleryCategories && galleryCategories.length > 0 ? galleryCategories : FALLBACK_CATEGORIES;
@@ -77,6 +81,46 @@ export default function GalleryManager() {
 
     const handleCategoryNameChange = (id, newName) => {
         setCategoriesList(prev => prev.map(cat => cat.id === id ? { ...cat, label: newName } : cat));
+    };
+
+    const handleAddCategory = (e) => {
+        e.preventDefault();
+        const trimmed = newCatLabel.trim();
+        if (!trimmed) return;
+
+        const id = trimmed.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ('cat-' + Date.now());
+        if (categoriesList.find(c => c.id === id)) {
+            alert('A category with a similar name already exists.');
+            return;
+        }
+
+        const newCat = {
+            id,
+            label: trimmed,
+            items: []
+        };
+
+        setCategoriesList(prev => [...prev, newCat]);
+        setActiveTab(id);
+        setNewCatLabel('');
+        setIsCatModalOpen(false);
+    };
+
+    const handleDeleteCategory = (id) => {
+        const cat = categoriesList.find(c => c.id === id);
+        if (!cat) return;
+
+        if (!confirm(`Are you sure you want to delete the category "${cat.label}" and all its ${cat.items?.length || 0} images?`)) {
+            return;
+        }
+
+        const updated = categoriesList.filter(c => c.id !== id);
+        setCategoriesList(updated);
+        if (updated.length > 0) {
+            setActiveTab(updated[0].id);
+        } else {
+            setActiveTab('');
+        }
     };
 
     const handleOpenItemModal = (index = null) => {
@@ -236,6 +280,13 @@ export default function GalleryManager() {
                             </button>
                         );
                     })}
+
+                    <button
+                        onClick={() => setIsCatModalOpen(true)}
+                        className="flex items-center gap-2 px-4 py-2.5 mt-2 bg-slate-50 hover:bg-blue-50 hover:text-blue-600 text-slate-500 text-[12px] font-bold rounded-xl transition-all border border-dashed border-slate-200 active:scale-97 cursor-pointer"
+                    >
+                        <Plus size={14} /> Add Category
+                    </button>
                 </nav>
 
                 {/* Main Editing Area */}
@@ -243,16 +294,25 @@ export default function GalleryManager() {
                     {currentCategory ? (
                         <div className="space-y-6">
                             {/* Category Title Heading Config */}
-                            <div className="bg-slate-50/60 border border-slate-100 rounded-2xl p-5 space-y-3">
-                                <label className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Category Heading Label</label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={currentCategory.label}
-                                    onChange={(e) => handleCategoryNameChange(currentCategory.id, e.target.value)}
-                                    className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-[14px] text-slate-800 font-extrabold focus:border-blue-500 focus:ring-[3px] focus:ring-blue-100 outline-none transition-all"
-                                    placeholder="Category Heading Name..."
-                                />
+                            <div className="bg-slate-50/60 border border-slate-100 rounded-2xl p-5 flex flex-col md:flex-row gap-4 items-end justify-between">
+                                <div className="flex-1 space-y-3">
+                                    <label className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Category Heading Label</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={currentCategory.label}
+                                        onChange={(e) => handleCategoryNameChange(currentCategory.id, e.target.value)}
+                                        className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-[14px] text-slate-800 font-extrabold focus:border-blue-500 focus:ring-[3px] focus:ring-blue-100 outline-none transition-all"
+                                        placeholder="Category Heading Name..."
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteCategory(currentCategory.id)}
+                                    className="flex items-center gap-1.5 px-4 py-3 bg-rose-50 text-rose-600 hover:bg-rose-100 font-extrabold text-xs rounded-xl active:scale-98 transition-all cursor-pointer h-[42px]"
+                                >
+                                    <Trash2 size={14} /> Delete Category
+                                </button>
                             </div>
 
                             {/* Items Header */}
@@ -452,6 +512,50 @@ export default function GalleryManager() {
                                     className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[12px] font-bold rounded-xl active:scale-98 transition-all hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer disabled:opacity-50"
                                 >
                                     {editItemIndex !== null ? 'Save Changes' : 'Add Card'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+            {/* Modal for Add Category */}
+            {isCatModalOpen && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+                    <div className="bg-white rounded-3xl w-full max-w-sm border border-slate-100 shadow-2xl overflow-hidden animate-scale-up">
+                        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
+                            <h3 className="font-extrabold text-[14px] text-slate-800">Add New Category</h3>
+                            <button
+                                onClick={() => setIsCatModalOpen(false)}
+                                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
+                            >
+                                <X size={16} />
+                            </button>
+                        </div>
+                        <form onSubmit={handleAddCategory} className="p-6 space-y-4">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Category Name</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={newCatLabel}
+                                    onChange={(e) => setNewCatLabel(e.target.value)}
+                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 focus:border-blue-500 focus:ring-[3px] focus:ring-blue-100 outline-none transition-all placeholder:text-slate-400 font-semibold"
+                                    placeholder="e.g. Special Events"
+                                />
+                            </div>
+                            <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsCatModalOpen(false)}
+                                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[12px] font-bold rounded-xl active:scale-98 transition-all cursor-pointer"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[12px] font-bold rounded-xl active:scale-98 transition-all hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer"
+                                >
+                                    Create Category
                                 </button>
                             </div>
                         </form>

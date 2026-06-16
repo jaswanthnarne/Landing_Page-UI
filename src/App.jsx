@@ -27,6 +27,7 @@ import EnquiriesManager from './pages/admin/EnquiriesManager';
 import PageImagesManager from './pages/admin/PageImagesManager';
 import LakshyaLabManager from './pages/admin/LakshyaLabManager';
 import GalleryManager from './pages/admin/GalleryManager';
+import NavigationManager from './pages/admin/NavigationManager';
 import { useEffect } from 'react';
 import { useWebsiteStore } from './store/useWebsiteStore';
 
@@ -130,6 +131,13 @@ function App() {
                     <ProtectedRoute>
                         <AdminLayout>
                             <GalleryManager />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path="/console/root/admin/navbar" element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <NavigationManager />
                         </AdminLayout>
                     </ProtectedRoute>
                 } />

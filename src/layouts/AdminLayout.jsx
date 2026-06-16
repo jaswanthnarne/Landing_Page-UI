@@ -23,6 +23,7 @@ export default function AdminLayout({ children }) {
         { name: 'Hero Slides', href: '/console/root/admin/hero', icon: Images },
         { name: 'Page Images', href: '/console/root/admin/images', icon: ImageIcon },
         { name: 'Gallery Categories', href: '/console/root/admin/gallery', icon: Images },
+        { name: 'Navigation Bar', href: '/console/root/admin/navbar', icon: Menu },
         { name: 'Courses & Depts', href: '/console/root/admin/courses', icon: BookOpen },
         { name: 'CoE Labs', href: '/console/root/admin/labs', icon: Cpu },
         { name: 'Lakshya Labs', href: '/console/root/admin/lakshya', icon: Target },
