@@ -770,10 +770,10 @@ export default function LakshyaLab() {
                             </p>
                             <div className="mb-12">
                                 <a 
-                                    href="/student/dashboard" 
+                                    href={lakshyaConfig?.read_more_link || "/student/dashboard"} 
                                     className="inline-flex items-center gap-1.5 text-emerald-600 font-bold hover:text-emerald-700 transition-colors text-[14px]"
                                 >
-                                    Read More: Lakshya 2047 Center for Future Skills <ChevronRight size={16} />
+                                    {lakshyaConfig?.read_more_label || "Read More: Lakshya 2047 Center for Future Skills"} <ChevronRight size={16} />
                                 </a>
                             </div>
                         </FadeIn>

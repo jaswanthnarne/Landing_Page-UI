@@ -5,6 +5,7 @@ import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import { ImageTrail } from '../../components/ui/image-trail';
 import { getOptimizedImageUrl } from '../../utils/cloudinary';
+import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 
 const FadeIn = ({ children, className = '', delay = 0 }) => (
@@ -156,11 +157,13 @@ function LightboxModal({ items, startIndex, onClose }) {
 }
 
 export default function Gallery() {
+    const galleryCategories = useWebsiteStore((state) => state.galleryCategories);
     const [activeCategory, setActiveCategory] = useState('cfs');
     const [lightbox, setLightbox] = useState(null);
     const heroRef = useRef(null);
 
-    const cat = categories.find(c => c.id === activeCategory);
+    const displayCategories = galleryCategories && galleryCategories.length > 0 ? galleryCategories : categories;
+    const cat = displayCategories.find(c => c.id === activeCategory) || displayCategories[0] || { id: 'cfs', label: 'Centre For Future Skills', items: [] };
 
     // Real images from the gallery
     const trailImages = [
@@ -231,17 +234,17 @@ export default function Gallery() {
                         {/* Category Tabs */}
                         <FadeIn>
                             <div className="flex flex-wrap gap-2.5 mb-10">
-                                {categories.map(c => (
+                                {displayCategories.map(c => (
                                     <motion.button key={c.id}
                                         onClick={() => setActiveCategory(c.id)}
                                         whileTap={{ scale: 0.97 }}
-                                        className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all duration-200 ${activeCategory === c.id
+                                        className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all duration-200 ${activeCategory === c.id || cat.id === c.id
                                             ? 'bg-[#004AAD] text-white shadow-[0_4px_16px_rgba(0,74,173,0.25)]'
                                             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                             }`}>
                                         {c.label}
-                                        <span className={`text-[11px] font-extrabold px-1.5 py-0.5 rounded-md ${activeCategory === c.id ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'}`}>
-                                            {c.count}
+                                        <span className={`text-[11px] font-extrabold px-1.5 py-0.5 rounded-md ${activeCategory === c.id || cat.id === c.id ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                                            {c.items ? c.items.length : 0}
                                         </span>
                                     </motion.button>
                                 ))}
@@ -251,13 +254,13 @@ export default function Gallery() {
                         {/* Grid */}
                         <AnimatePresence mode="wait">
                             <motion.div
-                                key={activeCategory}
+                                key={cat.id}
                                 initial={{ opacity: 0, y: 16 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -8 }}
                                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 lg:gap-4">
-                                {cat.items.map((item, i) => (
+                                {cat.items && cat.items.map((item, i) => (
                                     <motion.div
                                         key={i}
                                         initial={{ opacity: 0, scale: 0.94 }}
@@ -269,7 +272,7 @@ export default function Gallery() {
 
                                         {/* Real photo */}
                                         <img
-                                            src={getOptimizedImageUrl(item.src, { width: 400 })}
+                                            src={getOptimizedImageUrl(item.src, { width: 1000 })}
                                             alt={item.label}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             loading="lazy"

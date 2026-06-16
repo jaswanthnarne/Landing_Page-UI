@@ -26,6 +26,7 @@ import CareersManager from './pages/admin/CareersManager';
 import EnquiriesManager from './pages/admin/EnquiriesManager';
 import PageImagesManager from './pages/admin/PageImagesManager';
 import LakshyaLabManager from './pages/admin/LakshyaLabManager';
+import GalleryManager from './pages/admin/GalleryManager';
 import { useEffect } from 'react';
 import { useWebsiteStore } from './store/useWebsiteStore';
 
@@ -122,6 +123,13 @@ function App() {
                     <ProtectedRoute>
                         <AdminLayout>
                             <LakshyaLabManager />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path="/console/root/admin/gallery" element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <GalleryManager />
                         </AdminLayout>
                     </ProtectedRoute>
                 } />

@@ -68,6 +68,8 @@ export default function LakshyaLabManager() {
     const [pmQuote, setPmQuote] = useState('');
     const [pmAuthor, setPmAuthor] = useState('');
     const [pmDesc, setPmDesc] = useState('');
+    const [readMoreLink, setReadMoreLink] = useState('');
+    const [readMoreLabel, setReadMoreLabel] = useState('');
 
     // Quotes Local State
     const [quotes, setQuotes] = useState([]);
@@ -116,6 +118,8 @@ export default function LakshyaLabManager() {
         setLabs(config.labs || DEFAULT_LABS);
         setGallery(config.gallery || DEFAULT_GALLERY);
         setEcosystemLabs(config.ecosystem_labs || DEFAULT_ECOSYSTEM_LABS);
+        setReadMoreLink(config.read_more_link || '/student/dashboard');
+        setReadMoreLabel(config.read_more_label || 'Read More: Lakshya 2047 Center for Future Skills');
     }, [lakshyaConfig]);
 
     const handleSaveConfig = async (e) => {
@@ -130,7 +134,9 @@ export default function LakshyaLabManager() {
             quotes: quotes,
             labs: labs,
             gallery: gallery,
-            ecosystem_labs: ecosystemLabs
+            ecosystem_labs: ecosystemLabs,
+            read_more_link: readMoreLink,
+            read_more_label: readMoreLabel
         };
 
         try {
@@ -454,6 +460,36 @@ export default function LakshyaLabManager() {
                                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 focus:border-emerald-500 focus:ring-[3px] focus:ring-emerald-100 outline-none transition-all placeholder:text-slate-400 font-medium leading-relaxed"
                                         placeholder="Describe the alignment of Lakshya 2047 with Viksit Bharat..."
                                     />
+                                </div>
+
+                                <div className="border-t border-slate-100 pt-4 mt-4 space-y-4">
+                                    <h4 className="font-extrabold text-[12px] text-slate-700 uppercase tracking-wider">Ecosystem Lab CTA (Read More Link)</h4>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-1">
+                                            <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">CTA Link URL</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={readMoreLink}
+                                                onChange={(e) => setReadMoreLink(e.target.value)}
+                                                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 focus:border-emerald-500 focus:ring-[3px] focus:ring-emerald-100 outline-none transition-all placeholder:text-slate-400 font-semibold"
+                                                placeholder="/student/dashboard"
+                                            />
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">CTA Link Label</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={readMoreLabel}
+                                                onChange={(e) => setReadMoreLabel(e.target.value)}
+                                                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 focus:border-emerald-500 focus:ring-[3px] focus:ring-emerald-100 outline-none transition-all placeholder:text-slate-400 font-semibold"
+                                                placeholder="Read More: Lakshya 2047 Center for Future Skills"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
