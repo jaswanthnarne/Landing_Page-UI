@@ -4,8 +4,6 @@ import {
   useAnimate,
   useAnimationFrame,
 } from "framer-motion"
-import { v4 as uuidv4 } from "uuid"
-
 import { useMouseVector } from "../hooks/use-mouse-vector"
 
 const ImageTrail = ({
@@ -32,7 +30,7 @@ const ImageTrail = ({
   const addToTrail = useCallback(
     (mousePos) => {
       const newItem = {
-        id: uuidv4(),
+        id: Math.random().toString(36).substring(2, 9) + Date.now().toString(36),
         x: mousePos.x,
         y: mousePos.y,
         rotation: (Math.random() - 0.5) * rotationRange * 2,
