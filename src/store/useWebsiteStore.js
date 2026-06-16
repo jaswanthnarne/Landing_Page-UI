@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 // Configure dynamic API base URL for hosting individually on Vercel
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '' : 'https://landing-page-be-beta.vercel.app');
 
 export const useWebsiteStore = create((set, get) => ({
     // State
