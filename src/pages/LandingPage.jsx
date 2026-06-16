@@ -271,6 +271,17 @@ const LandingPage = () => {
                                 ))}
                             </div>
 
+                            {/* Preload all hero images to avoid transition lag */}
+                            <div className="hidden" aria-hidden="true">
+                                {heroSlides.map((slide, index) => (
+                                    <img
+                                        key={`preload-${index}`}
+                                        src={getOptimizedImageUrl(slide.image, { width: 1000 })}
+                                        alt=""
+                                    />
+                                ))}
+                            </div>
+
                             {/* Quick trust line */}
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.5 }}
                                 className="flex items-center gap-4 pt-2 text-[13px] text-slate-400">
@@ -385,7 +396,7 @@ const LandingPage = () => {
                                                 src={`/assets/${logo.src}`}
                                                 alt={logo.alt}
                                                 className="h-24 sm:h-32 md:h-36 lg:h-44 w-auto object-contain mix-blend-darken contrast-[1.1] transition-all duration-500 group-hover:scale-105"
-                                                loading="lazy"
+                                                loading="eager"
                                             />
                                         </div>
                                     ))}
@@ -755,7 +766,7 @@ const LandingPage = () => {
                             </div>
                             <div className="lg:col-span-4 flex justify-center">
                                 <div className="relative border border-slate-800 rounded-2xl overflow-hidden aspect-[4/3] w-full max-w-sm shadow-2xl">
-                                    <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781576801/ethnotech/lakshya/mqgm0wi0nq8kdr30fn4p.jpg" alt="Lakshya 2047 Building" className="w-full h-full object-cover" />
+                                    <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781576801/ethnotech/lakshya/mqgm0wi0nq8kdr30fn4p.jpg", { width: 500 })} alt="Lakshya 2047 Building" className="w-full h-full object-cover" loading="lazy" />
                                     <div className="absolute inset-0 bg-slate-950/20" />
                                 </div>
                             </div>

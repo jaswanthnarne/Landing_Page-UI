@@ -107,12 +107,12 @@ const About = () => {
                             <div className="flex flex-col gap-4 mt-24">
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                                     className="w-44 h-56 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={getOptimizedImageUrl(pageImages['about-1'] || "/Events/Light Ceremony .png", { width: 500 })} alt="Action Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-1'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781633967/ethnotech/events/is0rm2183jdlpbbvus73.png", { width: 500 })} alt="Action Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                                     className="w-44 h-40 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={getOptimizedImageUrl(pageImages['about-2'] || "/Events/Group Lighting.png", { width: 500 })} alt="Group Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-2'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781633969/ethnotech/events/qvupcqxrkfi64oionkhr.png", { width: 500 })} alt="Group Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
@@ -121,12 +121,12 @@ const About = () => {
                             <div className="flex flex-col gap-4 -mt-10 relative z-10">
                                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                                     className="w-64 h-72 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-[6px] border-white relative group">
-                                    <img src={getOptimizedImageUrl(pageImages['about-3'] || "/Events/Keynote Speaker.png", { width: 600 })} alt="Keynote Speaker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-3'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781633971/ethnotech/events/bqg0c9igkprjfsqueqgc.png", { width: 600 })} alt="Keynote Speaker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/5 mix-blend-overlay opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
                                     className="w-64 h-48 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={getOptimizedImageUrl(pageImages['about-4'] || "/Events/Screenshot 2026-03-29 201005.png", { width: 500 })} alt="Handover Ceremony" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-4'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781633974/ethnotech/events/juopzdayxolpscha6rpv.png", { width: 500 })} alt="Handover Ceremony" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
@@ -135,7 +135,7 @@ const About = () => {
                             <div className="flex flex-col gap-4 mt-16">
                                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
                                     className="w-48 h-64 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={getOptimizedImageUrl(pageImages['about-5'] || "/Events/Panel Discussion .png", { width: 500 })} alt="Panel Discussion" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-5'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781633979/ethnotech/events/ibtwjo4rlnoddj98ffcq.png", { width: 500 })} alt="Panel Discussion" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
