@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
+import { getOptimizedImageUrl } from '../../utils/cloudinary';
+
 
 // ── Partner Logo Map ──────────────────────────────────────────────────
 const partnerLogos = {
@@ -31,9 +33,9 @@ function PartnerPill({ name, size = 'md' }) {
         const logoHeight = size === 'sm' ? 'h-3.5' : 'h-5';
         return (
             <span className={`inline-flex items-center gap-2 px-2.5 py-1 bg-[#eff6ff]/30 border border-blue-200/40 rounded-full shadow-sm`}>
-                <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584360/ethnotech/assets/y23u3jp1twt4tpyzx2lg.png" alt="NSDC" className={`${logoHeight} w-auto object-contain`} />
+                <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584360/ethnotech/assets/y23u3jp1twt4tpyzx2lg.png", { width: 150 })} alt="NSDC" className={`${logoHeight} w-auto object-contain`} loading="lazy" />
                 <span className="text-[10px] font-bold text-slate-400 select-none">+</span>
-                <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png" alt="Ethnotech" className={`${logoHeight} w-auto object-contain`} />
+                <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png", { width: 150 })} alt="Ethnotech" className={`${logoHeight} w-auto object-contain`} loading="lazy" />
             </span>
         );
     }
@@ -45,7 +47,7 @@ function PartnerPill({ name, size = 'md' }) {
         <span className={`inline-flex items-center gap-2 ${padding} bg-white border border-slate-200 rounded-full shadow-sm`}
             style={{ backgroundColor: p.bg, borderColor: `${p.fg}20` }}>
             {p.src ? (
-                <img src={p.src} alt={name} className={`${imgSize} object-contain`} />
+                <img src={getOptimizedImageUrl(p.src, { width: 150 })} alt={name} className={`${imgSize} object-contain`} loading="lazy" />
             ) : (
                 <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p.fg }} />
             )}
@@ -314,9 +316,10 @@ function LightboxModal({ items, startIndex, onClose }) {
                         />
                     ) : (
                         <img 
-                            src={activeItem.src} 
+                            src={getOptimizedImageUrl(activeItem.src, { width: 1200 })} 
                             alt={activeItem.caption}
                             className="w-full max-h-[75vh] object-contain"
+                            loading="eager"
                         />
                     )}
                 </div>
@@ -356,8 +359,9 @@ function LabCard({ lab, onImageClick, globalImageOffset }) {
             {/* Cover Image */}
             <div className="relative h-56 cursor-pointer group overflow-hidden"
                 onClick={() => onImageClick(lab.images[0].src)}>
-                <img src={lab.images[0].src} alt={lab.images[0].caption}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108" />
+                <img src={getOptimizedImageUrl(lab.images[0].src, { width: 600 })} alt={lab.images[0].caption}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
+                    loading="lazy" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <div className="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center">
@@ -700,7 +704,7 @@ export default function LakshyaLab() {
                                                     {item.isVideo ? (
                                                         <video src={item.src} muted loop autoPlay playsInline className="w-full h-full object-cover opacity-80 group-hover:scale-103 group-hover:opacity-100 transition-all duration-500" />
                                                     ) : (
-                                                        <img src={item.src} alt={item.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                                        <img src={getOptimizedImageUrl(item.src, { width: 500 })} alt={item.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                                     )}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                                                     {/* Hover zoom icon */}

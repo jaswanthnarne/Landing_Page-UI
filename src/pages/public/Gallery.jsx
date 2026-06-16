@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import { ImageTrail } from '../../components/ui/image-trail';
+import { getOptimizedImageUrl } from '../../utils/cloudinary';
+
 
 const FadeIn = ({ children, className = '', delay = 0 }) => (
     <motion.div
@@ -106,13 +108,14 @@ function LightboxModal({ items, startIndex, onClose }) {
                     <AnimatePresence mode="wait">
                         <motion.img
                             key={index}
-                            src={item.src}
+                            src={getOptimizedImageUrl(item.src, { width: 1200 })}
                             alt={item.label}
                             initial={{ opacity: 0, scale: 1.03 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.25 }}
                             className="w-full h-full object-cover"
+                            loading="eager"
                         />
                     </AnimatePresence>
                     {/* Caption overlay */}
@@ -187,9 +190,10 @@ export default function Gallery() {
                                     className="flex relative overflow-hidden w-28 h-28 sm:w-32 sm:h-32 rounded-xl shadow-lg border-[3px] border-white"
                                 >
                                     <img
-                                        src={url}
+                                        src={getOptimizedImageUrl(url, { width: 250 })}
                                         alt={`Trail image ${index + 1}`}
                                         className="object-cover absolute inset-0 hover:scale-110 transition-transform"
+                                        loading="lazy"
                                     />
                                 </div>
                             ))}
@@ -265,9 +269,10 @@ export default function Gallery() {
 
                                         {/* Real photo */}
                                         <img
-                                            src={item.src}
+                                            src={getOptimizedImageUrl(item.src, { width: 400 })}
                                             alt={item.label}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            loading="lazy"
                                         />
 
                                         {/* Hover overlay */}

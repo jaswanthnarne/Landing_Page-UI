@@ -11,6 +11,8 @@ import { GradientCard } from '@/components/ui/gradient-card';
 import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { ProgressiveBlur } from '@/components/ui/progressive-blur';
 import { useWebsiteStore } from '../store/useWebsiteStore';
+import { getOptimizedImageUrl } from '../utils/cloudinary';
+
 
 /* ─── Counter ─── */
 const Counter = ({ target }) => {
@@ -212,15 +214,15 @@ const LandingPage = () => {
                             </motion.div>
 
                             {/* Animated Heading */}
-                            <div className="relative min-h-[120px] sm:min-h-[130px] lg:min-h-[145px]">
-                                <AnimatePresence mode="wait">
+                            <div className="grid grid-cols-1 grid-rows-1 items-start">
+                                <AnimatePresence>
                                     <motion.h1
                                         key={`heading-${activeSlide}`}
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 15 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                        className="text-[2.5rem] sm:text-[2.9rem] lg:text-[3.2rem] font-extrabold text-slate-900 leading-[1.1] tracking-[-0.02em] absolute inset-0"
+                                        exit={{ opacity: 0, y: -15 }}
+                                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                                        className="col-start-1 row-start-1 text-[2.5rem] sm:text-[2.9rem] lg:text-[3.2rem] font-extrabold text-slate-900 leading-[1.1] tracking-[-0.02em]"
                                     >
                                         {heroSlides[activeSlide]?.heading}
                                     </motion.h1>
@@ -228,15 +230,15 @@ const LandingPage = () => {
                             </div>
 
                             {/* Animated Description */}
-                            <div className="relative min-h-[52px]">
-                                <AnimatePresence mode="wait">
+                            <div className="grid grid-cols-1 grid-rows-1 items-start">
+                                <AnimatePresence>
                                     <motion.p
                                         key={`desc-${activeSlide}`}
-                                        initial={{ opacity: 0, y: 12 }}
+                                        initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -12 }}
-                                        transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                                        className="text-[15px] text-slate-500 max-w-md leading-[1.7] absolute inset-0"
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.4, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+                                        className="col-start-1 row-start-1 text-[15px] text-slate-500 max-w-md leading-[1.7]"
                                     >
                                         {heroSlides[activeSlide]?.description}
                                     </motion.p>
@@ -290,19 +292,22 @@ const LandingPage = () => {
                                 <div className="relative z-10 w-full max-w-lg">
                                     <div className="relative bg-white/40 backdrop-blur-xl border border-white/40 rounded-[2.5rem] shadow-2xl p-4 overflow-hidden group/carousel">
                                         <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden">
-                                            <AnimatePresence mode="wait">
+                                            <AnimatePresence>
                                                 <motion.img
                                                     key={`hero-img-${activeSlide}`}
-                                                    src={heroSlides[activeSlide]?.image}
+                                                    src={getOptimizedImageUrl(heroSlides[activeSlide]?.image, { width: 1000 })}
                                                     alt={`Ethnotech Academy slide ${activeSlide + 1}`}
-                                                    initial={{ opacity: 0, scale: 1.08 }}
+                                                    initial={{ opacity: 0, scale: 1.05 }}
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     exit={{ opacity: 0, scale: 0.95 }}
-                                                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                                     className="absolute inset-0 w-full h-full object-cover rounded-[2rem] shadow-lg"
+                                                    loading="eager"
+                                                    fetchPriority="high"
                                                 />
                                             </AnimatePresence>
                                         </div>
+
 
                                         {/* Left Navigation Arrow */}
                                         <button
@@ -380,6 +385,7 @@ const LandingPage = () => {
                                                 src={`/assets/${logo.src}`}
                                                 alt={logo.alt}
                                                 className="h-24 sm:h-32 md:h-36 lg:h-44 w-auto object-contain mix-blend-darken contrast-[1.1] transition-all duration-500 group-hover:scale-105"
+                                                loading="lazy"
                                             />
                                         </div>
                                     ))}
@@ -674,9 +680,10 @@ const LandingPage = () => {
                                         {/* Lab Cover Image */}
                                         <div className="relative h-48 overflow-hidden">
                                             <img
-                                                src={lab.image}
+                                                src={getOptimizedImageUrl(lab.image, { width: 600 })}
                                                 alt={lab.name}
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                loading="lazy"
                                             />
                                             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300" />
                                             <div className="absolute top-4 left-4">
@@ -834,9 +841,10 @@ const LandingPage = () => {
                                         className="group px-6 py-6 bg-white border border-slate-200/60 rounded-2xl flex items-center justify-center hover:shadow-md hover:border-[#004AAD]/20 transition-all duration-300 cursor-default"
                                     >
                                         <img
-                                            src={partner.logo}
+                                            src={getOptimizedImageUrl(partner.logo, { width: 200 })}
                                             alt={partner.name}
                                             className="h-10 w-auto max-w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 scale-95 group-hover:scale-100 mix-blend-multiply"
+                                            loading="lazy"
                                         />
                                     </div>
                                 ))}

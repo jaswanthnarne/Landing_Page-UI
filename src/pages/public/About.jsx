@@ -7,6 +7,8 @@ import {
     Users, BookOpen, GraduationCap, Building2, MapPin, Compass, Rocket
 } from 'lucide-react';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
+import { getOptimizedImageUrl } from '../../utils/cloudinary';
+
 
 /* ─── Animation Components ─── */
 const FadeIn = ({ children, delay = 0, className = "", direction = "up" }) => {
@@ -100,17 +102,17 @@ const About = () => {
                         </div>
 
                         {/* ── Right Collage (Events & Conferences) ── */}
-                        <div className="flex-1 w-full hidden lg:flex items-center justify-center gap-4 relative">
+                         <div className="flex-1 w-full hidden lg:flex items-center justify-center gap-4 relative">
                             {/* Column 1 */}
                             <div className="flex flex-col gap-4 mt-24">
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                                     className="w-44 h-56 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={pageImages['about-1'] || "/Events/Light Ceremony .png"} alt="Action Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-1'] || "/Events/Light Ceremony .png", { width: 500 })} alt="Action Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                                     className="w-44 h-40 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={pageImages['about-2'] || "/Events/Group Lighting.png"} alt="Group Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-2'] || "/Events/Group Lighting.png", { width: 500 })} alt="Group Lighting" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
@@ -119,12 +121,12 @@ const About = () => {
                             <div className="flex flex-col gap-4 -mt-10 relative z-10">
                                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                                     className="w-64 h-72 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-[6px] border-white relative group">
-                                    <img src={pageImages['about-3'] || "/Events/Keynote Speaker.png"} alt="Keynote Speaker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-3'] || "/Events/Keynote Speaker.png", { width: 600 })} alt="Keynote Speaker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/5 mix-blend-overlay opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
                                     className="w-64 h-48 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={pageImages['about-4'] || "/Events/Screenshot 2026-03-29 201005.png"} alt="Handover Ceremony" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-4'] || "/Events/Screenshot 2026-03-29 201005.png", { width: 500 })} alt="Handover Ceremony" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
@@ -133,7 +135,7 @@ const About = () => {
                             <div className="flex flex-col gap-4 mt-16">
                                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
                                     className="w-48 h-64 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                    <img src={pageImages['about-5'] || "/Events/Panel Discussion .png"} alt="Panel Discussion" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <img src={getOptimizedImageUrl(pageImages['about-5'] || "/Events/Panel Discussion .png", { width: 500 })} alt="Panel Discussion" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                 </motion.div>
                             </div>
@@ -288,9 +290,10 @@ const About = () => {
                                 <div className="bg-white border border-slate-200/60 rounded-2xl p-4 flex flex-col items-center justify-between h-40 hover:shadow-xl hover:-translate-y-1 hover:border-blue-300 transition-all duration-300 group cursor-default text-center overflow-hidden">
                                     <div className="flex-1 flex items-center justify-center w-full p-1 opacity-85 group-hover:opacity-100 transition-opacity">
                                         <img
-                                            src={partner.logo}
+                                            src={getOptimizedImageUrl(partner.logo, { width: 250 })}
                                             alt={partner.name}
                                             className="max-h-[75px] max-w-full object-contain mix-blend-multiply"
+                                            loading="lazy"
                                         />
                                     </div>
                                     <div className="h-10 mt-2 flex items-center justify-center border-t border-slate-50 w-full pt-1">
@@ -328,10 +331,11 @@ const About = () => {
                         {industryPartners.map((partner, i) => (
                             <FadeIn key={i} delay={i * 0.02} direction="up" className="group flex items-center justify-center">
                                 <img
-                                    src={partner.logo}
+                                    src={getOptimizedImageUrl(partner.logo, { width: 200 })}
                                     alt={partner.name}
                                     title={partner.name}
                                     className="w-auto h-10 md:h-12 max-w-[130px] md:max-w-[170px] object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110 mix-blend-multiply"
+                                    loading="lazy"
                                 />
                             </FadeIn>
                         ))}

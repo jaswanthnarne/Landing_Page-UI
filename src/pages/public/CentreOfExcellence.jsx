@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronRight, X, ChevronLeft, MapPin, ExternalLink, Activity, Cpu, MonitorPlay, Zap, Boxes, ArrowRight, ZoomIn, Award } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
+import { getOptimizedImageUrl } from '../../utils/cloudinary';
+
 
 // ── Partner Logo Map ──────────────────────────────────────────────────
 const partnerLogos = {
@@ -54,9 +56,9 @@ function PartnerPill({ name, size = 'md' }) {
         const logoHeight = size === 'sm' ? 'h-3.5' : 'h-5';
         return (
             <span className={`inline-flex items-center gap-2 px-2.5 py-1 bg-[#eff6ff]/30 border border-blue-200/40 rounded-full shadow-sm`}>
-                <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584360/ethnotech/assets/y23u3jp1twt4tpyzx2lg.png" alt="NSDC" className={`${logoHeight} w-auto object-contain`} />
+                <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584360/ethnotech/assets/y23u3jp1twt4tpyzx2lg.png", { width: 150 })} alt="NSDC" className={`${logoHeight} w-auto object-contain`} loading="lazy" />
                 <span className="text-[10px] font-bold text-slate-400 select-none">+</span>
-                <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png" alt="Ethnotech" className={`${logoHeight} w-auto object-contain`} />
+                <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png", { width: 150 })} alt="Ethnotech" className={`${logoHeight} w-auto object-contain`} loading="lazy" />
             </span>
         );
     }
@@ -67,8 +69,8 @@ function PartnerPill({ name, size = 'md' }) {
     return (
         <span className={`inline-flex items-center gap-2 ${padding} bg-white border border-slate-200 rounded-full shadow-sm`}>
             {p.src && (
-                <img src={p.src} alt={name} className={`${imgSize} object-contain`}
-                    style={{ filter: p.fg === '#1d1d1f' ? 'none' : 'none' }} />
+                <img src={getOptimizedImageUrl(p.src, { width: 150 })} alt={name} className={`${imgSize} object-contain`}
+                    style={{ filter: p.fg === '#1d1d1f' ? 'none' : 'none' }} loading="lazy" />
             )}
             <span className={`${textSize} font-bold`} style={{ color: p.fg }}>{name}</span>
         </span>
@@ -165,8 +167,8 @@ function LightboxModal({ items, startIndex, onClose }) {
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 className="relative max-w-5xl w-full"
                 onClick={e => e.stopPropagation()}>
-                {items.length > 0 && <img src={items[current]?.src} alt={items[current]?.caption}
-                    className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl" />}
+                {items.length > 0 && <img src={getOptimizedImageUrl(items[current]?.src, { width: 1200 })} alt={items[current]?.caption}
+                    className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl" loading="eager" />}
                 <div className="absolute bottom-0 left-0 right-0 px-6 py-4 rounded-b-2xl"
                     style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)' }}>
                     <p className="text-white text-[14px] font-semibold">{items[current]?.caption}</p>
@@ -201,8 +203,8 @@ function LabCard({ lab, onImageClick, globalImageOffset }) {
             {lab.images.length === 1 ? (
                 <div className="relative aspect-[16/10] cursor-pointer group overflow-hidden"
                     onClick={() => onImageClick(globalImageOffset)}>
-                    <img src={lab.images[0].src} alt={lab.images[0].caption}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108" />
+                    <img src={getOptimizedImageUrl(lab.images[0].src, { width: 600 })} alt={lab.images[0].caption}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108" loading="lazy" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-300" />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                         <div className="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center">
@@ -223,8 +225,8 @@ function LabCard({ lab, onImageClick, globalImageOffset }) {
                                 className={`relative cursor-pointer group overflow-hidden ${isWide ? 'col-span-2' : ''}`}
                                 onClick={() => onImageClick(globalImageOffset + i)}>
                                 <div className={isWide ? 'h-40' : 'h-28'}>
-                                    <img src={img.src} alt={img.caption}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                    <img src={getOptimizedImageUrl(img.src, { width: isWide ? 600 : 300 })} alt={img.caption}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                 </div>
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-all duration-300" />
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -323,12 +325,12 @@ export default function CentreOfExcellence() {
                                 <div className="flex flex-col gap-4 mt-20">
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                                         className="w-52 h-60 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                        <img src={pageImages['coe-1'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584293/ethnotech/page_images/dfivijh6zw9zu44lm4er.jpg"} alt="Apple Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        <img src={getOptimizedImageUrl(pageImages['coe-1'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584293/ethnotech/page_images/dfivijh6zw9zu44lm4er.jpg", { width: 500 })} alt="Apple Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="eager" />
                                         <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                     </motion.div>
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                                         className="w-52 h-44 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                        <img src={pageImages['coe-2'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584294/ethnotech/page_images/hxbwq7wsmlcxsanhgork.jpg"} alt="Festo Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        <img src={getOptimizedImageUrl(pageImages['coe-2'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584294/ethnotech/page_images/hxbwq7wsmlcxsanhgork.jpg", { width: 500 })} alt="Festo Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="eager" />
                                         <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                     </motion.div>
                                 </div>
@@ -337,12 +339,12 @@ export default function CentreOfExcellence() {
                                 <div className="flex flex-col gap-4 -mt-16 relative z-10">
                                     <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                                         className="w-64 h-64 rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-4 border-white relative group">
-                                        <img src={pageImages['coe-3'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584296/ethnotech/page_images/sgwtst9dx9xmnu0xeme4.jpg"} alt="AR VR Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        <img src={getOptimizedImageUrl(pageImages['coe-3'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584296/ethnotech/page_images/sgwtst9dx9xmnu0xeme4.jpg", { width: 600 })} alt="AR VR Lab" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="eager" />
                                         <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-overlay opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                     </motion.div>
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
                                         className="w-64 h-52 rounded-[2rem] overflow-hidden shadow-xl border-4 border-white relative group">
-                                        <img src={pageImages['coe-4'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584297/ethnotech/page_images/h1wymxwvdkmrehzqttlm.jpg"} alt="Festo Hydraulics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        <img src={getOptimizedImageUrl(pageImages['coe-4'] || "https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584297/ethnotech/page_images/h1wymxwvdkmrehzqttlm.jpg", { width: 600 })} alt="Festo Hydraulics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="eager" />
                                         <div className="absolute inset-0 bg-[#004AAD]/10 mix-blend-multiply opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
                                     </motion.div>
                                 </div>
@@ -426,7 +428,7 @@ export default function CentreOfExcellence() {
                                     <motion.div key={i} whileHover={{ scale: 1.015 }} transition={{ duration: 0.25 }}
                                         className={`relative overflow-hidden rounded-2xl group cursor-pointer ${img.h}`}
                                         onClick={() => setLightbox({ startIndex: i === 0 ? 0 : 3 })}>
-                                        <img src={img.src} alt={img.label} className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105" />
+                                        <img src={getOptimizedImageUrl(img.src, { width: 600 })} alt={img.label} className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105" loading="lazy" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
                                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                             <div className="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center">
@@ -452,7 +454,7 @@ export default function CentreOfExcellence() {
                                 ].map((img, i) => (
                                     <motion.div key={i} whileHover={{ scale: 1.02 }} transition={{ duration: 0.25 }}
                                         className="relative overflow-hidden rounded-2xl group cursor-pointer h-52">
-                                        <img src={img.src} alt={img.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        <img src={getOptimizedImageUrl(img.src, { width: 400 })} alt={img.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                                         <div className="absolute bottom-0 left-0 px-4 py-3">
                                             <p className="text-white text-[12px] font-bold">{img.label}</p>
@@ -468,7 +470,7 @@ export default function CentreOfExcellence() {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
                                 <motion.div whileHover={{ scale: 1.015 }} transition={{ duration: 0.25 }}
                                     className="relative overflow-hidden rounded-2xl group cursor-pointer h-52 md:col-span-2">
-                                    <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584321/ethnotech/coe/xpopw6xki8o26cuhb3wa.jpg" alt="Festo Pneumatics" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                    <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584321/ethnotech/coe/xpopw6xki8o26cuhb3wa.jpg", { width: 600 })} alt="Festo Pneumatics" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                                     <div className="absolute bottom-0 left-0 px-5 py-4">
                                         <p className="text-white text-[13px] font-bold">Festo Pneumatics Classroom</p>
@@ -477,7 +479,7 @@ export default function CentreOfExcellence() {
                                 </motion.div>
                                 <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.25 }}
                                     className="relative overflow-hidden rounded-2xl group cursor-pointer h-52">
-                                    <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584324/ethnotech/coe/hhvyydzhtr3pdi8zvato.jpg" alt="Conference Room" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                    <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584324/ethnotech/coe/hhvyydzhtr3pdi8zvato.jpg", { width: 400 })} alt="Conference Room" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                                     <div className="absolute bottom-0 left-0 px-4 py-3">
                                         <p className="text-white text-[12px] font-bold">Conference Room</p>
@@ -503,7 +505,7 @@ export default function CentreOfExcellence() {
                                         transition={{ duration: 0.4, delay: i * 0.06 }}
                                         whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                                         className="relative overflow-hidden rounded-2xl group cursor-pointer h-44">
-                                        <img src={img.src} alt={img.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        <img src={getOptimizedImageUrl(img.src, { width: 300 })} alt={img.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                                         <div className="absolute bottom-0 left-0 px-3 py-3">
                                             <p className="text-white text-[11px] font-bold leading-tight">{img.label}</p>
@@ -552,9 +554,10 @@ export default function CentreOfExcellence() {
 
                         <FadeIn delay={0.1}>
                             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 lg:p-10 mb-6">
-                                <img src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584362/ethnotech/assets/pr4ilpxivofnevyuomiz.jpg"
+                                <img src={getOptimizedImageUrl("https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584362/ethnotech/assets/pr4ilpxivofnevyuomiz.jpg", { width: 800 })}
                                     alt="Ethnotech Pan-India Presence Map — 30+ cities across India"
-                                    className="w-full max-w-3xl mx-auto h-auto object-contain block" />
+                                    className="w-full max-w-3xl mx-auto h-auto object-contain block"
+                                    loading="lazy" />
                                 <div className="mt-5 flex items-center gap-2 justify-center">
                                     <span className="w-3 h-3 rounded-full bg-red-500 inline-block shadow-sm" />
                                     <span className="text-[13px] text-slate-500 font-medium">Ethnotech Centre / Partner Location</span>

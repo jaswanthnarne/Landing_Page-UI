@@ -53,3 +53,44 @@ export async function uploadToCloudinary(file, folder = 'ethnotech') {
     const data = await response.json();
     return data.secure_url;
 }
+
+/**
+ * Optimizes a Cloudinary image URL by injecting f_auto, q_auto, and optional resizing/cropping parameters.
+ * If the URL is not a Cloudinary URL, it returns the original URL.
+ * @param {string} url - The original image URL
+ * @param {object} [options] - Optimization options
+ * @param {number} [options.width] - Optional width to resize the image to
+ * @param {number} [options.height] - Optional height to resize the image to
+ * @param {string} [options.crop] - Optional crop mode (e.g. 'fill', 'scale')
+ * @returns {string} The optimized URL
+ */
+export function getOptimizedImageUrl(url, options = {}) {
+    if (!url || typeof url !== 'string') return '';
+    if (!url.includes('res.cloudinary.com')) return url;
+
+    // Avoid transforming SVGs if they are already vector graphics
+    if (url.endsWith('.svg')) return url;
+
+    // Check if it already has transformations (e.g. upload/c_scale,w_400/v123...)
+    const uploadIndex = url.indexOf('/upload/');
+    if (uploadIndex === -1) return url;
+
+    // Split the URL at '/upload/'
+    const prefix = url.substring(0, uploadIndex + 8); // includes '/upload/'
+    const suffix = url.substring(uploadIndex + 8);
+
+    // Build the transformation parameters
+    const transformations = ['f_auto', 'q_auto'];
+    if (options.width) transformations.push(`w_${options.width}`);
+    if (options.height) transformations.push(`h_${options.height}`);
+    if (options.crop) {
+        transformations.push(`c_${options.crop}`);
+    } else if (options.width || options.height) {
+        // Default crop fill when resizing
+        transformations.push('c_fill');
+    }
+
+    // Assemble the new URL
+    return `${prefix}${transformations.join(',')}/${suffix}`;
+}
+
