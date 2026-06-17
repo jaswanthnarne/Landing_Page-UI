@@ -5,7 +5,7 @@ import {
     MoveUp, MoveDown, Save, Link2, ChevronDown, ListPlus, LayoutGrid
 } from 'lucide-react';
 
-const PAGE_OPTIONS = [
+const STATIC_PAGE_OPTIONS = [
     { label: 'Home Page', value: '/' },
     { label: 'About Us', value: '/about' },
     { label: 'Programmes', value: '/programmes' },
@@ -18,8 +18,7 @@ const PAGE_OPTIONS = [
     { label: 'Contact Us', value: '/contact' },
     { label: 'Educational Partners Section', value: '/about#educational-partners' },
     { label: 'Corporate Partners Section', value: '/about#corporate-partners' },
-    { label: 'Recruitment Partners Section', value: '/placements#recruitment-partners' },
-    { label: 'Custom Path / URL...', value: 'custom' }
+    { label: 'Recruitment Partners Section', value: '/placements#recruitment-partners' }
 ];
 
 const DEFAULT_NAVBAR_ITEMS = [
@@ -55,6 +54,17 @@ const DEFAULT_NAVBAR_ITEMS = [
 export default function NavigationManager() {
     const navbarItems = useWebsiteStore((state) => state.navbarItems);
     const updateNavbarItems = useWebsiteStore((state) => state.updateNavbarItems);
+    const blogs = useWebsiteStore((state) => state.blogs) || [];
+
+    // Combine static routes with dynamic blog post endpoints
+    const pageOptions = [
+        ...STATIC_PAGE_OPTIONS,
+        ...blogs.map((blog) => ({
+            label: `Blog: ${blog.title}`,
+            value: `/blog/${blog.slug}`
+        })),
+        { label: 'Custom Path / URL...', value: 'custom' }
+    ];
 
     const [itemsList, setItemsList] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
@@ -155,7 +165,7 @@ export default function NavigationManager() {
                 setHeadCustomHref('');
             } else {
                 setHeadType('link');
-                const isPredefined = PAGE_OPTIONS.some(o => o.value === item.href && o.value !== 'custom');
+                const isPredefined = pageOptions.some(o => o.value === item.href && o.value !== 'custom');
                 if (isPredefined) {
                     setHeadHref(item.href);
                     setHeadCustomHref('');
@@ -204,7 +214,7 @@ export default function NavigationManager() {
             const child = itemsList[parentIdx].dropdown[childIdx];
             setEditChildIndex(childIdx);
             setChildLabel(child.label || '');
-            const isPredefined = PAGE_OPTIONS.some(o => o.value === child.href && o.value !== 'custom');
+            const isPredefined = pageOptions.some(o => o.value === child.href && o.value !== 'custom');
             if (isPredefined) {
                 setChildHref(child.href);
                 setChildCustomHref('');
@@ -479,7 +489,7 @@ export default function NavigationManager() {
                                             onChange={(e) => setHeadHref(e.target.value)}
                                             className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 font-semibold focus:border-blue-500 focus:ring-[3px] focus:ring-blue-100 outline-none transition-all cursor-pointer"
                                         >
-                                            {PAGE_OPTIONS.map((opt) => (
+                                            {pageOptions.map((opt) => (
                                                 <option key={opt.value} value={opt.value}>{opt.label}</option>
                                             ))}
                                         </select>
@@ -560,7 +570,7 @@ export default function NavigationManager() {
                                         onChange={(e) => setChildHref(e.target.value)}
                                         className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[13px] text-slate-800 font-semibold focus:border-blue-500 focus:ring-[3px] focus:ring-blue-100 outline-none transition-all cursor-pointer"
                                     >
-                                        {PAGE_OPTIONS.map((opt) => (
+                                        {pageOptions.map((opt) => (
                                             <option key={opt.value} value={opt.value}>{opt.label}</option>
                                         ))}
                                     </select>

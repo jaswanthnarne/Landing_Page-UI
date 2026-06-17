@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Search, Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import SEO from '../../components/common/SEO';
-import { blogData } from '../../data/blogData';
+import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 // Reusable micro-animation wrapper
 const FadeIn = ({ children, delay = 0, className = "" }) => {
@@ -22,6 +22,7 @@ const FadeIn = ({ children, delay = 0, className = "" }) => {
 };
 
 export default function BlogList() {
+    const blogData = useWebsiteStore((state) => state.blogs);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
 

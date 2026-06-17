@@ -32,6 +32,7 @@ import LakshyaLabManager from './pages/admin/LakshyaLabManager';
 import GalleryManager from './pages/admin/GalleryManager';
 import NavigationManager from './pages/admin/NavigationManager';
 import PlacementsManager from './pages/admin/PlacementsManager';
+import BlogManager from './pages/admin/BlogManager';
 import Toast from './components/common/Toast';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useEffect } from 'react';
@@ -154,6 +155,13 @@ function App() {
                     <ProtectedRoute>
                         <AdminLayout>
                             <PlacementsManager />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path="/console/root/admin/blogs" element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <BlogManager />
                         </AdminLayout>
                     </ProtectedRoute>
                 } />

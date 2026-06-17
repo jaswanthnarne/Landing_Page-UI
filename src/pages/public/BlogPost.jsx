@@ -3,14 +3,30 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, Linkedin, Facebook, Twitter, Award, ChevronRight } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import SEO from '../../components/common/SEO';
-import { blogData } from '../../data/blogData';
+import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 export default function BlogPost() {
     const { slug } = useParams();
     const navigate = useNavigate();
+    const blogs = useWebsiteStore((state) => state.blogs) || [];
+    const isStoreInitialized = useWebsiteStore((state) => state.isStoreInitialized);
+
+    // Show loading spinner if store hasn't initialized
+    if (!isStoreInitialized) {
+        return (
+            <PublicLayout>
+                <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="w-10 h-10 border-4 border-[#004AAD] border-t-transparent rounded-full animate-spin" />
+                        <span className="text-xs text-slate-500 font-bold tracking-wide">Loading article...</span>
+                    </div>
+                </div>
+            </PublicLayout>
+        );
+    }
 
     // Find the current post
-    const post = blogData.find(p => p.slug === slug);
+    const post = blogs.find(p => p.slug === slug);
 
     // Scroll to top on mount or slug change
     useEffect(() => {
@@ -41,8 +57,8 @@ export default function BlogPost() {
     }
 
     // Get other articles for the sidebar recommendation
-    const recommendedPosts = blogData
-        .filter(p => p.id !== post.id)
+    const recommendedPosts = blogs
+        .filter(p => (p._id || p.id) !== (post._id || post.id))
         .slice(0, 3);
 
     // Dynamic sharing URLs
@@ -217,7 +233,7 @@ export default function BlogPost() {
                                 <div className="space-y-4">
                                     {recommendedPosts.map(p => (
                                         <Link 
-                                            key={p.id} 
+                                            key={p._id || p.id} 
                                             to={`/blog/${p.slug}`}
                                             className="flex gap-3 items-start group"
                                         >

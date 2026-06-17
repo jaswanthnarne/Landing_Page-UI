@@ -20,6 +20,7 @@ export const useWebsiteStore = create((set, get) => ({
     galleryCategories: [],
     navbarItems: [],
     placementsConfig: null,
+    blogs: [],
     toast: null,
     isStoreInitialized: false,
 
@@ -45,7 +46,8 @@ export const useWebsiteStore = create((set, get) => ({
                 lakshyaRes,
                 galleryRes,
                 navbarRes,
-                placementsRes
+                placementsRes,
+                blogsRes
             ] = await Promise.all([
                 axios.get('/api/hero'),
                 axios.get('/api/courses'),
@@ -57,7 +59,8 @@ export const useWebsiteStore = create((set, get) => ({
                 axios.get('/api/lakshya').catch(() => ({ data: null })),
                 axios.get('/api/gallery').catch(() => ({ data: null })),
                 axios.get('/api/navbar').catch(() => ({ data: null })),
-                axios.get('/api/placements').catch(() => ({ data: null }))
+                axios.get('/api/placements').catch(() => ({ data: null })),
+                axios.get('/api/blogs').catch(() => ({ data: [] }))
             ]);
 
             set({
@@ -72,6 +75,7 @@ export const useWebsiteStore = create((set, get) => ({
                 galleryCategories: galleryRes?.data?.categories || [],
                 navbarItems: navbarRes?.data?.items || [],
                 placementsConfig: placementsRes?.data || null,
+                blogs: blogsRes.data || [],
                 isStoreInitialized: true
             });
 
@@ -508,6 +512,47 @@ export const useWebsiteStore = create((set, get) => ({
             set({ jobApplications: applications.filter((_, i) => i !== index) });
         } catch (error) {
             console.error('Failed to delete job application:', error);
+        }
+    },
+
+    // Blogs Actions
+    addBlog: async (blog) => {
+        try {
+            const res = await axios.post('/api/blogs', blog);
+            // Append newly seeded/created blog post dynamically
+            set((state) => ({
+                blogs: [...state.blogs, res.data.blog]
+            }));
+            get().showToast('Blog article created successfully!', 'success');
+            // Re-initialize store to ensure IDs sync
+            await get().initStore();
+        } catch (error) {
+            console.error('Failed to add blog:', error);
+            get().showToast('Failed to create blog article.', 'error');
+        }
+    },
+    updateBlog: async (id, updatedBlog) => {
+        try {
+            await axios.put(`/api/blogs?id=${id}`, updatedBlog);
+            set((state) => ({
+                blogs: state.blogs.map((b) => b._id === id ? { ...b, ...updatedBlog } : b)
+            }));
+            get().showToast('Blog article updated successfully!', 'success');
+        } catch (error) {
+            console.error('Failed to update blog:', error);
+            get().showToast('Failed to update blog article.', 'error');
+        }
+    },
+    deleteBlog: async (id) => {
+        try {
+            await axios.delete(`/api/blogs?id=${id}`);
+            set((state) => ({
+                blogs: state.blogs.filter((b) => b._id !== id)
+            }));
+            get().showToast('Blog article deleted successfully!', 'success');
+        } catch (error) {
+            console.error('Failed to delete blog:', error);
+            get().showToast('Failed to delete blog article.', 'error');
         }
     }
 }));
