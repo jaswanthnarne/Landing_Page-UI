@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
-import { Plus, Trash2, Cpu, Radio, Zap, Settings, Building2, Monitor, Briefcase, Palette, HelpCircle, Edit } from 'lucide-react';
+import { Plus, Trash2, Cpu, Radio, Zap, Settings, Building2, Monitor, Briefcase, Palette, HelpCircle, Edit, BookOpen } from 'lucide-react';
 
 export default function CoursesManager() {
     const deptCourses = useWebsiteStore((state) => state.deptCourses);
