@@ -215,7 +215,7 @@
           </table>
         </div>
         <div class="footer">
-          Generated programmatically for finishingschools.jaswanthnarne.online
+          Generated programmatically for finishingshcools.jaswanthnarne.online
         </div>
       </body>
     </html>

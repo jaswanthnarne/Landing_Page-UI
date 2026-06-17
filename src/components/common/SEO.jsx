@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 export default function SEO({ title, description, keywords, path }) {
     const siteTitle = "Ethnotech Academy";
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-    const baseUrl = "https://finishingschools.jaswanthnarne.online";
+    const baseUrl = "https://finishingshcools.jaswanthnarne.online";
     const canonicalUrl = path ? `${baseUrl}${path}` : baseUrl;
     const defaultDescription = "Ethnotech Academy is a leading ed-tech company in India providing industry-aligned skilling, corporate training, Centres of Excellence (CoE), and career placement support in emerging technologies.";
     

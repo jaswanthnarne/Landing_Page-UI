@@ -1,5 +1,5 @@
 # robots.txt for Ethnotech Academy
-# Website URL: https://finishingschools.jaswanthnarne.online/
+# Website URL: https://finishingshcools.jaswanthnarne.online/
 
 User-agent: *
 Allow: /
@@ -10,4 +10,4 @@ Disallow: /console/root/admin/
 Disallow: /console/root/admin/*
 
 # Sitemap location
-Sitemap: https://finishingschools.jaswanthnarne.online/sitemap.xml
+Sitemap: https://finishingshcools.jaswanthnarne.online/sitemap.xml

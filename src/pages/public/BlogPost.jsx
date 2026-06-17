@@ -62,7 +62,7 @@ export default function BlogPost() {
         .slice(0, 3);
 
     // Dynamic sharing URLs
-    const currentUrl = `https://finishingschools.jaswanthnarne.online/blog/${post.slug}`;
+    const currentUrl = `https://finishingshcools.jaswanthnarne.online/blog/${post.slug}`;
     const shareOnLinkedIn = () => {
         window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`, '_blank');
     };
