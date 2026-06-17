@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import { TrendingUp, Users, Briefcase, Award } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 const FadeIn = ({ children, className = '', delay = 0 }) => (
@@ -157,6 +158,12 @@ export default function Placements() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Placements" 
+                description="Explore placement statistics, average packages, and top global hiring partners from Ethnotech Academy."
+                keywords="ethnotech placements, hiring partners, student jobs engineering, corporate placement rate"
+                path="/placements"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

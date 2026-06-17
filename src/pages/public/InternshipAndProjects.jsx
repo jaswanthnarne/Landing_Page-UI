@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Clock, Users, Star, BookOpen, Rocket } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 const FadeIn = ({ children, className = '', delay = 0 }) => (
@@ -114,6 +115,12 @@ export default function InternshipAndProjects() {
     const pageImages = useWebsiteStore((state) => state.pageImages || {});
     return (
         <PublicLayout>
+            <SEO 
+                title="Internships & Projects" 
+                description="Gain practical experience with industry-aligned internships, capstone projects, portfolio building, and live client projects."
+                keywords="ethnotech internships, student projects, capstone projects, career skilling, engineering portfolio"
+                path="/internship-and-projects"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

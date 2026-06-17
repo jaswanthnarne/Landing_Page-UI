@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import {
     CalendarDays, Target, Lightbulb, ArrowRight,
     Users, BookOpen, GraduationCap, Building2, MapPin, Compass, Rocket
@@ -71,6 +72,12 @@ const About = () => {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="About Us" 
+                description="Learn about Ethnotech Academy's journey since 2014, our mission, vision, milestone achievements, and global corporate partners."
+                keywords="about ethnotech, education history, academy mission, learning milestones, global partners"
+                path="/about"
+            />
             {/* ══════════ HERO SECTION & VISION/MISSION ══════════ */}
             <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden" style={{ background: 'linear-gradient(155deg, #f0f5ff 0%, #ffffff 55%, #eef3ff 100%)' }}>
                 {/* Background Rotating Rings from CoE UI */}

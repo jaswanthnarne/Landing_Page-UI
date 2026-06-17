@@ -7,6 +7,7 @@ import {
     Microscope, Landmark, GraduationCap, Compass, Play, Pause
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 import { getOptimizedImageUrl } from '../../utils/cloudinary';
 
@@ -429,6 +430,12 @@ export default function LakshyaLab() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Lakshya 2047" 
+                description="Explore Lakshya 2047 - Ethnotech Academy's Advanced Centre for Future Skills, offering high-fidelity computing labs and industry ecosystems."
+                keywords="lakshya 2047, centre for future skills, advanced computer labs, nvidia cisco labs, ethnotech finishing school"
+                path="/lakshya-2047"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Award, Cpu, Radio, Zap, Settings, Building2, Monitor, Briefcase, Palette } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 
 const FadeIn = ({ children, className = '', delay = 0 }) => (
@@ -55,6 +56,12 @@ export default function Programmes() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Academic Programmes" 
+                description="Explore industry-aligned certification and training programs in computer science, cybersecurity, and engineering disciplines."
+                keywords="ethnotech programmes, computer science courses, engineering training, skilling india"
+                path="/programmes"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

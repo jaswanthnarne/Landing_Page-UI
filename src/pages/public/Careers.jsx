@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Users, Briefcase, MapPin, Clock, X, UploadCloud, Loader2, CheckCircle2 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 import { uploadToCloudinary } from '../../utils/cloudinary';
 
@@ -160,6 +161,12 @@ export default function Careers() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Careers" 
+                description="Explore job openings and career opportunities at Ethnotech Academy. Join our team of educators, technologists, and researchers."
+                keywords="ethnotech careers, edtech jobs bangalore, software trainer openings, research careers education"
+                path="/careers"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

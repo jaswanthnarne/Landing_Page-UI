@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronRight, X, ChevronLeft, MapPin, ExternalLink, Activity, Cpu, MonitorPlay, Zap, Boxes, ArrowRight, ZoomIn, Award } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 import { getOptimizedImageUrl } from '../../utils/cloudinary';
 
@@ -280,6 +281,12 @@ export default function CentreOfExcellence() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Centres of Excellence" 
+                description="Explore our specialized training laboratories co-established with Apple, IBM, Intel, Festo, and Schneider Electric."
+                keywords="apple centre of excellence, ibm coe, intel training labs, engineering excellence labs, ethnotech labs"
+                path="/centre-of-excellence"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

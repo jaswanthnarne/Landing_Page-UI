@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Public Pages
 import Careers from './pages/public/Careers';
@@ -11,6 +12,8 @@ import About from './pages/public/About';
 import Contact from './pages/public/Contact';
 import LandingPage from './pages/LandingPage';
 import LakshyaLab from './pages/public/LakshyaLab';
+import BlogList from './pages/public/BlogList';
+import BlogPost from './pages/public/BlogPost';
 
 // Admin Console Components
 import ProtectedRoute from './components/admin/ProtectedRoute';
@@ -42,20 +45,23 @@ function App() {
     }, [initStore]);
 
     return (
-        <Router>
-            <Routes>
-                {/* Landing Pages */}
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/internship-and-projects" element={<InternshipAndProjects />} />
-                <Route path="/placements" element={<Placements />} />
-                <Route path="/centre-for-future-skills" element={<Navigate to="/lakshya-2047" replace />} />
-                <Route path="/centre-of-excellence" element={<CentreOfExcellence />} />
-                <Route path="/lakshya-2047" element={<LakshyaLab />} />
-                <Route path="/programmes" element={<Programmes />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
+        <HelmetProvider>
+            <Router>
+                <Routes>
+                    {/* Landing Pages */}
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/careers" element={<Careers />} />
+                    <Route path="/gallery" element={<Gallery />} />
+                    <Route path="/internship-and-projects" element={<InternshipAndProjects />} />
+                    <Route path="/placements" element={<Placements />} />
+                    <Route path="/centre-for-future-skills" element={<Navigate to="/lakshya-2047" replace />} />
+                    <Route path="/centre-of-excellence" element={<CentreOfExcellence />} />
+                    <Route path="/lakshya-2047" element={<LakshyaLab />} />
+                    <Route path="/programmes" element={<Programmes />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/blog" element={<BlogList />} />
+                    <Route path="/blog/:slug" element={<BlogPost />} />
                 
                 {/* Admin Console Routing */}
                 <Route path="/console/root/admin/login" element={<Login />} />
@@ -159,8 +165,7 @@ function App() {
             <Toast />
             <SpeedInsights />
         </Router>
-
-
+        </HelmetProvider>
     );
 }
 

@@ -7,6 +7,7 @@ import {
     CheckCircle, Award, Zap, Settings, Building2, Monitor, Briefcase, Palette, Radio, ZoomIn
 } from 'lucide-react';
 import PublicLayout from '../layouts/PublicLayout';
+import SEO from '../components/common/SEO';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { ProgressiveBlur } from '@/components/ui/progressive-blur';
@@ -196,6 +197,7 @@ const LandingPage = () => {
 
     return (
         <PublicLayout>
+            <SEO path="/" />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ══════════ HERO ══════════ */}

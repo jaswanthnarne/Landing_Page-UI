@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { ImageTrail } from '../../components/ui/image-trail';
 import { getOptimizedImageUrl } from '../../utils/cloudinary';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
@@ -178,6 +179,12 @@ export default function Gallery() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Campus Gallery" 
+                description="Explore our campus infrastructure, Apple CoE, IBM Labs, Schneider automation facilities, and event gallery."
+                keywords="ethnotech gallery, campus infrastructure, computer science lab photos, college automation photos"
+                path="/gallery"
+            />
             <div className="bg-white overflow-x-hidden">
 
                 {/* ── Hero ── */}

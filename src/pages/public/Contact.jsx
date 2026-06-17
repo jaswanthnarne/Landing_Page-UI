@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import PublicLayout from '../../layouts/PublicLayout';
+import SEO from '../../components/common/SEO';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
 import { 
     MapPin, Phone, Mail, Send, User, MessageSquare, CheckCircle2
@@ -55,6 +56,12 @@ export default function Contact() {
 
     return (
         <PublicLayout>
+            <SEO 
+                title="Contact Us" 
+                description="Get in touch with Ethnotech Academy. Reach out for student admissions, corporate partnerships, center locations, or support inquiries."
+                keywords="contact ethnotech, admission helpline, corporate relations, office address bangalore"
+                path="/contact"
+            />
             <div className="bg-white">
                 
                 {/* ══════════ HERO SECTION ══════════ */}
