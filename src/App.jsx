@@ -30,6 +30,7 @@ import GalleryManager from './pages/admin/GalleryManager';
 import NavigationManager from './pages/admin/NavigationManager';
 import PlacementsManager from './pages/admin/PlacementsManager';
 import Toast from './components/common/Toast';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useEffect } from 'react';
 import { useWebsiteStore } from './store/useWebsiteStore';
 
@@ -156,7 +157,9 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <Toast />
+            <SpeedInsights />
         </Router>
+
 
     );
 }
