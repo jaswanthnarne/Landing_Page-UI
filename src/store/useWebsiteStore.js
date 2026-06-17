@@ -19,6 +19,7 @@ export const useWebsiteStore = create((set, get) => ({
     lakshyaConfig: null,
     galleryCategories: [],
     navbarItems: [],
+    placementsConfig: null,
     isStoreInitialized: false,
 
     // Initialize Store
@@ -34,7 +35,8 @@ export const useWebsiteStore = create((set, get) => ({
                 imagesRes,
                 lakshyaRes,
                 galleryRes,
-                navbarRes
+                navbarRes,
+                placementsRes
             ] = await Promise.all([
                 axios.get('/api/hero'),
                 axios.get('/api/courses'),
@@ -45,7 +47,8 @@ export const useWebsiteStore = create((set, get) => ({
                 axios.get('/api/images'),
                 axios.get('/api/lakshya').catch(() => ({ data: null })),
                 axios.get('/api/gallery').catch(() => ({ data: null })),
-                axios.get('/api/navbar').catch(() => ({ data: null }))
+                axios.get('/api/navbar').catch(() => ({ data: null })),
+                axios.get('/api/placements').catch(() => ({ data: null }))
             ]);
 
             set({
@@ -59,6 +62,7 @@ export const useWebsiteStore = create((set, get) => ({
                 lakshyaConfig: lakshyaRes.data,
                 galleryCategories: galleryRes?.data?.categories || [],
                 navbarItems: navbarRes?.data?.items || [],
+                placementsConfig: placementsRes?.data || null,
                 isStoreInitialized: true
             });
 
@@ -155,6 +159,17 @@ export const useWebsiteStore = create((set, get) => ({
             set({ navbarItems: items });
         } catch (error) {
             console.error('Failed to update navbar items:', error);
+            throw error;
+        }
+    },
+
+    // Placements Config Action
+    updatePlacementsConfig: async (updatedConfig) => {
+        try {
+            await axios.put('/api/placements', updatedConfig);
+            set({ placementsConfig: { ...get().placementsConfig, ...updatedConfig } });
+        } catch (error) {
+            console.error('Failed to update placements config:', error);
             throw error;
         }
     },

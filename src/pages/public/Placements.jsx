@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
 import { TrendingUp, Users, Briefcase, Award } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout';
 import { useWebsiteStore } from '../../store/useWebsiteStore';
@@ -13,6 +14,46 @@ const FadeIn = ({ children, className = '', delay = 0 }) => (
         {children}
     </motion.div>
 );
+
+const StatCounter = ({ target }) => {
+    const ref = useRef(null);
+    const inView = useInView(ref, { once: true, margin: '-20px' });
+    const [val, setVal] = useState('0');
+
+    useEffect(() => {
+        if (!inView) return;
+        const numMatch = target.match(/[0-9.]+/);
+        if (!numMatch) {
+            setVal(target);
+            return;
+        }
+        const n = parseFloat(numMatch[0]);
+        const dec = numMatch[0].includes('.');
+        const prefix = target.substring(0, target.indexOf(numMatch[0]));
+        const suffix = target.substring(target.indexOf(numMatch[0]) + numMatch[0].length);
+
+        const c = animate(0, n, {
+            duration: 2.2,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate(v) {
+                setVal(prefix + (dec ? v.toFixed(1) : Math.floor(v).toString()) + suffix);
+            }
+        });
+        return () => c.stop();
+    }, [inView, target]);
+
+    return <span ref={ref}>{inView ? val : '0'}</span>;
+};
+
+const getStatIcon = (iconName) => {
+    switch (iconName) {
+        case 'Award': return <Award className="text-[#004AAD]" size={18} />;
+        case 'TrendingUp': return <TrendingUp className="text-[#004AAD]" size={18} />;
+        case 'Briefcase': return <Briefcase className="text-[#004AAD]" size={18} />;
+        case 'Users': return <Users className="text-[#004AAD]" size={18} />;
+        default: return <Award className="text-[#004AAD]" size={18} />;
+    }
+};
 
 const services = [
     {
@@ -98,11 +139,21 @@ const services = [
     },
 ];
 
-// Hiring Partners will be loaded dynamically inside the component from useWebsiteStore
-
 export default function Placements() {
     const hiringPartners = useWebsiteStore((state) => state.placementPartners);
     const pageImages = useWebsiteStore((state) => state.pageImages || {});
+    const placementsConfig = useWebsiteStore((state) => state.placementsConfig);
+
+    const displayConfig = placementsConfig || {
+        heroTitle: 'Your Path to Career Success Starts Here',
+        heroSubtitle: 'Connecting talent with leading employers through dedicated placement support, expert career counseling, and a vast network of global industry partnerships.',
+        stats: [
+            { id: '1', value: '95%', label: 'Placement Rate', icon: 'Award' },
+            { id: '2', value: '24 LPA', label: 'Highest Package', icon: 'TrendingUp' },
+            { id: '3', value: '6.5 LPA', label: 'Average Package', icon: 'Briefcase' },
+            { id: '4', value: '80+', label: 'Hiring Partners', icon: 'Users' }
+        ]
+    };
 
     return (
         <PublicLayout>
@@ -127,28 +178,25 @@ export default function Placements() {
                                 </motion.span>
                                 <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                                     className="text-[2.8rem] lg:text-[4rem] font-extrabold text-slate-900 leading-[1.06] tracking-[-0.02em] mb-7">
-                                    Your Path to<br className="hidden lg:block"/><span className="text-[#004AAD]"> Career Success</span> Starts Here
+                                    {displayConfig.heroTitle}
                                 </motion.h1>
                                 <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.25 }}
                                     className="text-[16.5px] text-slate-500 leading-relaxed mb-10 max-w-lg">
-                                    Connecting talent with leading employers through dedicated placement support, expert career counseling, and a vast network of global industry partnerships.
+                                    {displayConfig.heroSubtitle}
                                 </motion.p>
                                 
                                 <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
-                                    className="flex flex-wrap gap-3">
-                                    {[
-                                        { icon: Briefcase, title: 'Top Employers', subtitle: 'Global Network' },
-                                        { icon: Users, title: 'Dedicated Support', subtitle: 'Placement Cell' },
-                                        { icon: TrendingUp, title: 'Career Growth', subtitle: 'Proven Track Record' },
-                                        { icon: Award, title: 'Skill Excellence', subtitle: 'Industry Ready' },
-                                    ].map((s, i) => (
-                                        <div key={i} className="flex items-center gap-3 px-5 py-3 bg-white hover:bg-[#004AAD]/[0.02] rounded-2xl border border-slate-100 hover:border-[#004AAD]/20 shadow-sm transition-all cursor-default">
-                                            <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <s.icon size={16} className="text-[#004AAD]" />
+                                    className="grid grid-cols-2 gap-3.5 max-w-lg">
+                                    {(displayConfig.stats || []).map((s, i) => (
+                                        <div key={s.id || i} className="flex items-center gap-3.5 px-5 py-4 bg-white hover:bg-blue-50/20 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 cursor-default">
+                                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center border border-blue-100/50">
+                                                {getStatIcon(s.icon)}
                                             </div>
                                             <div>
-                                                <p className="text-[14px] font-bold text-slate-900 leading-none">{s.title}</p>
-                                                <p className="text-[11px] text-slate-500 font-semibold mt-1 tracking-wide">{s.subtitle}</p>
+                                                <p className="text-[17px] font-extrabold text-slate-900 leading-none">
+                                                    <StatCounter target={s.value} />
+                                                </p>
+                                                <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-wide">{s.label}</p>
                                             </div>
                                         </div>
                                     ))}

@@ -28,6 +28,7 @@ import PageImagesManager from './pages/admin/PageImagesManager';
 import LakshyaLabManager from './pages/admin/LakshyaLabManager';
 import GalleryManager from './pages/admin/GalleryManager';
 import NavigationManager from './pages/admin/NavigationManager';
+import PlacementsManager from './pages/admin/PlacementsManager';
 import { useEffect } from 'react';
 import { useWebsiteStore } from './store/useWebsiteStore';
 
@@ -141,6 +142,14 @@ function App() {
                         </AdminLayout>
                     </ProtectedRoute>
                 } />
+                <Route path="/console/root/admin/placements" element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <PlacementsManager />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                } />
+
 
                 {/* Fallback to Home */}
                 <Route path="*" element={<Navigate to="/" replace />} />

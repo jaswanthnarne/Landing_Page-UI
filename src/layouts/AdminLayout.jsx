@@ -4,8 +4,9 @@ import { useWebsiteStore } from '../store/useWebsiteStore';
 import {
     LayoutDashboard, Images, BookOpen, Cpu,
     Award, GraduationCap, Briefcase, Mail, LogOut, Menu, X, ShieldAlert,
-    Image as ImageIcon, Target
+    Image as ImageIcon, Target, Users
 } from 'lucide-react';
+
 
 export default function AdminLayout({ children }) {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -27,7 +28,8 @@ export default function AdminLayout({ children }) {
         { name: 'Courses & Depts', href: '/console/root/admin/courses', icon: BookOpen },
         { name: 'CoE Labs', href: '/console/root/admin/labs', icon: Cpu },
         { name: 'Lakshya Labs', href: '/console/root/admin/lakshya', icon: Target },
-        { name: 'Hiring Partners', href: '/console/root/admin/partners', icon: Award },
+        { name: 'Placements Page', href: '/console/root/admin/placements', icon: Award },
+        { name: 'Hiring Partners', href: '/console/root/admin/partners', icon: Users },
         { name: 'Colleges', href: '/console/root/admin/colleges', icon: GraduationCap },
         { name: 'Job Openings', href: '/console/root/admin/careers', icon: Briefcase },
         { name: 'Contact Enquiries', href: '/console/root/admin/enquiries', icon: Mail },
