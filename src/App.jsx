@@ -29,6 +29,7 @@ import LakshyaLabManager from './pages/admin/LakshyaLabManager';
 import GalleryManager from './pages/admin/GalleryManager';
 import NavigationManager from './pages/admin/NavigationManager';
 import PlacementsManager from './pages/admin/PlacementsManager';
+import Toast from './components/common/Toast';
 import { useEffect } from 'react';
 import { useWebsiteStore } from './store/useWebsiteStore';
 
@@ -154,7 +155,9 @@ function App() {
                 {/* Fallback to Home */}
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <Toast />
         </Router>
+
     );
 }
 

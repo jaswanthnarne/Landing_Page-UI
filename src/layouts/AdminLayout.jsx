@@ -68,15 +68,18 @@ export default function AdminLayout({ children }) {
             {/* Desktop Sidebar */}
             <aside className="w-64 bg-white border-r border-slate-100 hidden lg:flex flex-col flex-shrink-0 z-20">
                 {/* Brand */}
-                <div className="h-20 px-6 flex items-center border-b border-slate-100/80 gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#004AAD] to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                        <ShieldAlert size={18} className="text-white" />
-                    </div>
+                <div className="h-20 px-6 flex items-center border-b border-slate-100/80 gap-3">
+                    <img
+                        src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png"
+                        alt="Ethnotech Logo"
+                        className="w-9 h-9 object-contain select-none pointer-events-none"
+                    />
                     <div>
                         <span className="font-extrabold text-[15px] text-slate-800 tracking-tight leading-none block">Ethnotech</span>
-                        <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase block mt-0.5">Admin Console</span>
+                        <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase block mt-1">Admin Console</span>
                     </div>
                 </div>
+
 
                 {/* Sidebar Navigation */}
                 <div className="flex-1 overflow-y-auto px-4 py-6">
@@ -120,13 +123,16 @@ export default function AdminLayout({ children }) {
             >
                 <div className="h-20 px-6 flex items-center justify-between border-b border-slate-100">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#004AAD] to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                            <ShieldAlert size={18} className="text-white" />
-                        </div>
+                        <img
+                            src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png"
+                            alt="Ethnotech Logo"
+                            className="w-9 h-9 object-contain select-none pointer-events-none"
+                        />
                         <div>
                             <span className="font-extrabold text-[15px] text-slate-800 tracking-tight block">Ethnotech</span>
-                            <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase block mt-0.5">Admin Panel</span>
+                            <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase block mt-1">Admin Panel</span>
                         </div>
+
                     </div>
                     <button
                         onClick={() => setIsMobileOpen(false)}

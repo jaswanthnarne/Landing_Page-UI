@@ -12,6 +12,7 @@ export default function Login() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const loginAdmin = useWebsiteStore((state) => state.loginAdmin);
+    const showToast = useWebsiteStore((state) => state.showToast);
     const isAdminLoggedIn = useWebsiteStore((state) => state.isAdminLoggedIn);
     const navigate = useNavigate();
 
@@ -29,13 +30,15 @@ export default function Login() {
         // Simulate a small delay for premium visual feedback
         await new Promise((resolve) => setTimeout(resolve, 800));
 
-        const success = loginAdmin(email, password);
+        const success = await loginAdmin(email, password);
         setIsSubmitting(false);
 
         if (success) {
+            showToast('Authenticated successfully!', 'success');
             navigate('/console/root/admin', { replace: true });
         } else {
             setError('Invalid administrator email or password.');
+            showToast('Authentication failed. Wrong email or password.', 'error');
         }
     };
 
@@ -53,9 +56,11 @@ export default function Login() {
             >
                 {/* Brand Logo Header */}
                 <div className="flex flex-col items-center mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#004AAD] to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20 mb-4">
-                        <ShieldCheck size={28} className="text-white" />
-                    </div>
+                    <img
+                        src="https://res.cloudinary.com/ddwxonjbd/image/upload/v1781584361/ethnotech/assets/swqmbatcqgwpl1lcelez.png"
+                        alt="Ethnotech Academy"
+                        className="h-16 w-16 mb-4 object-contain"
+                    />
                     <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-none">Console Root Login</h1>
                     <p className="text-[12px] text-slate-400 font-semibold uppercase tracking-wider mt-2">Ethnotech Administrator</p>
                 </div>

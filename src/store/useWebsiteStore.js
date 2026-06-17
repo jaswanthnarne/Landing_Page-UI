@@ -20,7 +20,16 @@ export const useWebsiteStore = create((set, get) => ({
     galleryCategories: [],
     navbarItems: [],
     placementsConfig: null,
+    toast: null,
     isStoreInitialized: false,
+
+    // Toast Actions
+    showToast: (message, type = 'success') => {
+        set({ toast: { message, type } });
+    },
+    hideToast: () => {
+        set({ toast: null });
+    },
 
     // Initialize Store
     initStore: async () => {
@@ -125,8 +134,10 @@ export const useWebsiteStore = create((set, get) => ({
                     [key]: url
                 }
             }));
+            get().showToast('Banner image updated successfully!', 'success');
         } catch (error) {
             console.error('Failed to update page image:', error);
+            get().showToast('Failed to update banner image.', 'error');
         }
     },
 
@@ -135,8 +146,10 @@ export const useWebsiteStore = create((set, get) => ({
         try {
             await axios.put('/api/lakshya', updatedConfig);
             set({ lakshyaConfig: { ...get().lakshyaConfig, ...updatedConfig } });
+            get().showToast('Lakshya configuration saved successfully!', 'success');
         } catch (error) {
             console.error('Failed to update Lakshya config:', error);
+            get().showToast('Failed to save Lakshya configuration.', 'error');
             throw error;
         }
     },
@@ -146,8 +159,10 @@ export const useWebsiteStore = create((set, get) => ({
         try {
             await axios.put('/api/gallery', { categories });
             set({ galleryCategories: categories });
+            get().showToast('Gallery configuration saved successfully!', 'success');
         } catch (error) {
             console.error('Failed to update gallery categories:', error);
+            get().showToast('Failed to save gallery categories.', 'error');
             throw error;
         }
     },
@@ -157,8 +172,10 @@ export const useWebsiteStore = create((set, get) => ({
         try {
             await axios.put('/api/navbar', { items });
             set({ navbarItems: items });
+            get().showToast('Navigation bar items saved successfully!', 'success');
         } catch (error) {
             console.error('Failed to update navbar items:', error);
+            get().showToast('Failed to save navigation bar items.', 'error');
             throw error;
         }
     },
@@ -168,8 +185,10 @@ export const useWebsiteStore = create((set, get) => ({
         try {
             await axios.put('/api/placements', updatedConfig);
             set({ placementsConfig: { ...get().placementsConfig, ...updatedConfig } });
+            get().showToast('Placements page content updated successfully!', 'success');
         } catch (error) {
             console.error('Failed to update placements config:', error);
+            get().showToast('Failed to update placements page settings.', 'error');
             throw error;
         }
     },
