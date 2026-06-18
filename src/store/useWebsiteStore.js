@@ -21,6 +21,7 @@ export const useWebsiteStore = create((set, get) => ({
     navbarItems: [],
     placementsConfig: null,
     blogs: [],
+    faqs: [],
     toast: null,
     isStoreInitialized: false,
 
@@ -47,7 +48,8 @@ export const useWebsiteStore = create((set, get) => ({
                 galleryRes,
                 navbarRes,
                 placementsRes,
-                blogsRes
+                blogsRes,
+                faqsRes
             ] = await Promise.all([
                 axios.get('/api/hero'),
                 axios.get('/api/courses'),
@@ -60,7 +62,8 @@ export const useWebsiteStore = create((set, get) => ({
                 axios.get('/api/gallery').catch(() => ({ data: null })),
                 axios.get('/api/navbar').catch(() => ({ data: null })),
                 axios.get('/api/placements').catch(() => ({ data: null })),
-                axios.get('/api/blogs').catch(() => ({ data: [] }))
+                axios.get('/api/blogs').catch(() => ({ data: [] })),
+                axios.get('/api/faqs').catch(() => ({ data: [] }))
             ]);
 
             set({
@@ -76,6 +79,7 @@ export const useWebsiteStore = create((set, get) => ({
                 navbarItems: navbarRes?.data?.items || [],
                 placementsConfig: placementsRes?.data || null,
                 blogs: blogsRes.data || [],
+                faqs: faqsRes.data || [],
                 isStoreInitialized: true
             });
 
@@ -553,6 +557,45 @@ export const useWebsiteStore = create((set, get) => ({
         } catch (error) {
             console.error('Failed to delete blog:', error);
             get().showToast('Failed to delete blog article.', 'error');
+        }
+    },
+
+    // FAQs Actions
+    addFaq: async (faq) => {
+        try {
+            const res = await axios.post('/api/faqs', faq);
+            set((state) => ({
+                faqs: [...state.faqs, res.data.faq]
+            }));
+            get().showToast('FAQ added successfully!', 'success');
+            await get().initStore();
+        } catch (error) {
+            console.error('Failed to add FAQ:', error);
+            get().showToast('Failed to add FAQ.', 'error');
+        }
+    },
+    updateFaq: async (id, updatedFaq) => {
+        try {
+            await axios.put(`/api/faqs?id=${id}`, updatedFaq);
+            set((state) => ({
+                faqs: state.faqs.map((f) => f._id === id ? { ...f, ...updatedFaq } : f)
+            }));
+            get().showToast('FAQ updated successfully!', 'success');
+        } catch (error) {
+            console.error('Failed to update FAQ:', error);
+            get().showToast('Failed to update FAQ.', 'error');
+        }
+    },
+    deleteFaq: async (id) => {
+        try {
+            await axios.delete(`/api/faqs?id=${id}`);
+            set((state) => ({
+                faqs: state.faqs.filter((f) => f._id !== id)
+            }));
+            get().showToast('FAQ deleted successfully!', 'success');
+        } catch (error) {
+            console.error('Failed to delete FAQ:', error);
+            get().showToast('Failed to delete FAQ.', 'error');
         }
     }
 }));

@@ -4,7 +4,7 @@ import { useWebsiteStore } from '../store/useWebsiteStore';
 import {
     LayoutDashboard, Images, BookOpen, Cpu,
     Award, GraduationCap, Briefcase, Mail, LogOut, Menu, X, ShieldAlert,
-    Image as ImageIcon, Target, Users, FileText
+    Image as ImageIcon, Target, Users, FileText, HelpCircle
 } from 'lucide-react';
 
 
@@ -26,6 +26,7 @@ export default function AdminLayout({ children }) {
         { name: 'Gallery Categories', href: '/console/root/admin/gallery', icon: Images },
         { name: 'Navigation Bar', href: '/console/root/admin/navbar', icon: Menu },
         { name: 'Blog Manager', href: '/console/root/admin/blogs', icon: FileText },
+        { name: 'FAQ Manager', href: '/console/root/admin/faqs', icon: HelpCircle },
         { name: 'Courses & Depts', href: '/console/root/admin/courses', icon: BookOpen },
         { name: 'CoE Labs', href: '/console/root/admin/labs', icon: Cpu },
         { name: 'Lakshya Labs', href: '/console/root/admin/lakshya', icon: Target },

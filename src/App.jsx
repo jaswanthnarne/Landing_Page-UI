@@ -14,6 +14,7 @@ import LandingPage from './pages/LandingPage';
 import LakshyaLab from './pages/public/LakshyaLab';
 import BlogList from './pages/public/BlogList';
 import BlogPost from './pages/public/BlogPost';
+import FAQs from './pages/public/FAQs';
 
 // Admin Console Components
 import ProtectedRoute from './components/admin/ProtectedRoute';
@@ -33,6 +34,7 @@ import GalleryManager from './pages/admin/GalleryManager';
 import NavigationManager from './pages/admin/NavigationManager';
 import PlacementsManager from './pages/admin/PlacementsManager';
 import BlogManager from './pages/admin/BlogManager';
+import FaqsManager from './pages/admin/FaqsManager';
 import Toast from './components/common/Toast';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useEffect } from 'react';
@@ -63,6 +65,7 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/blog" element={<BlogList />} />
                     <Route path="/blog/:slug" element={<BlogPost />} />
+                    <Route path="/faqs" element={<FAQs />} />
                 
                 {/* Admin Console Routing */}
                 <Route path="/console/root/admin/login" element={<Login />} />
@@ -162,6 +165,13 @@ function App() {
                     <ProtectedRoute>
                         <AdminLayout>
                             <BlogManager />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path="/console/root/admin/faqs" element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <FaqsManager />
                         </AdminLayout>
                     </ProtectedRoute>
                 } />
